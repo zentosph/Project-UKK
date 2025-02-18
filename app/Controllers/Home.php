@@ -151,9 +151,26 @@ public function logout()
     return redirect()->to('home/login');
 }
 
+public function formd(){
+    echo view('header');
+    echo view('menu');
+    echo view('formd');
+    echo view('footer');
+    
+}
 
+public function hitungDiskon()
+{
+    $harga = $this->request->getPost('harga');
+    $diskon = $this->request->getPost('diskon');
 
+    if ($harga && $diskon !== null) {
+        $hargaAkhir = $harga - ($harga * $diskon / 100);
+        return $this->response->setJSON(['harga_setelah_diskon' => number_format($hargaAkhir, 2)]);
+    }
 
+    return $this->response->setJSON(['error' => 'Harap masukkan harga dan diskon dengan benar!']);
+}
 
 public function updateMenuVisibilityAjax()
 {
